@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Haruta Kosukegawa</title>
+  <meta name="description" content="「やりたい」を ひとりにしない。思いが連鎖する社会を作る。">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#07080c;
+      --muted:#1f2430;
+      --line:rgba(7,8,12,.12);
+
+      --yl:#ffcf33;
+      --or:#ff8a1f;
+
+      --titleOrange:#ffb06a;
+
+      --fb:#1877f2;
+      --ig:#e1306c;
+
+      --r:22px;
+      --max:1100px;
+      --shadow: 0 18px 55px rgba(12,12,18,.10);
+      --shadow2: 0 10px 26px rgba(12,12,18,.08);
+    }
+
+    @font-face{
+      font-family:"Tsunagi Gothic";
+      src: local("つなぎゴシック"), local("Tsunagi Gothic");
+      font-display: swap;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        "Tsunagi Gothic","つなぎゴシック",
+        "Hiragino Sans","Noto Sans JP",
+        system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 22px;}
+
+    /* ===== Background birds (more) ===== */
+    .sky{position: fixed; inset: 0; pointer-events:none; z-index: 0; overflow:hidden;}
+    .bird{position:absolute; left:-180px; opacity:.08; animation: fly linear infinite; will-change: transform;}
+    .bird svg{display:block}
+    @keyframes fly{
+      0%   {transform: translateX(-220px) translateY(0) scale(var(--s,1));}
+      50%  {transform: translateX(calc(50vw + 80px)) translateY(-10px) scale(var(--s,1));}
+      100% {transform: translateX(calc(100vw + 260px)) translateY(0) scale(var(--s,1));}
+    }
+    .b01{top: 6%;  --s:1.05; animation-duration: 22s; animation-delay: -3s;}
+    .b02{top: 10%; --s:.85; animation-duration: 28s; animation-delay: -10s;}
+    .b03{top: 14%; --s:1.15; animation-duration: 34s; animation-delay: -16s;}
+    .b04{top: 18%; --s:.75; animation-duration: 40s; animation-delay: -20s;}
+    .b05{top: 24%; --s:.95; animation-duration: 30s; animation-delay: -8s;}
+    .b06{top: 30%; --s:.80; animation-duration: 36s; animation-delay: -14s;}
+    .b07{top: 34%; --s:1.05; animation-duration: 44s; animation-delay: -26s;}
+    .b08{top: 40%; --s:.70; animation-duration: 38s; animation-delay: -18s;}
+    .b09{top: 46%; --s:.90; animation-duration: 48s; animation-delay: -30s;}
+    .b10{top: 54%; --s:.75; animation-duration: 42s; animation-delay: -22s;}
+
+    /* ===== Top nav ===== */
+    .top{
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.90);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+    }
+    .bar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 14px 0;}
+    .brand{display:flex; align-items:center; gap:10px; font-weight: 1000; letter-spacing:.2px; white-space: nowrap;}
+    .dot{width:10px; height:10px; border-radius:999px; background: var(--or); box-shadow: 0 0 0 6px rgba(255,207,51,.26);}
+    .links{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .pill{
+      font-size:13px; padding:8px 12px; border-radius:999px;
+      border:1px solid var(--line); background:#fff;
+      transition: transform .16s ease, box-shadow .16s ease;
+      font-weight: 900; color: var(--ink);
+    }
+    .pill:hover{transform: translateY(-1px); box-shadow: var(--shadow2);}
+
+    /* ===== Highlight (no gradient) ===== */
+    .hl{position: relative; display:inline-block; padding: 0 .12em; z-index: 1;}
+    .hl::before{
+      content:""; position:absolute; left:-.06em; right:-.06em;
+      bottom: .12em; height: .62em; background: var(--yl);
+      border-radius: 999px; z-index:-1; transform: skewX(-10deg);
+    }
+    .hl.or::before{ background: var(--or); opacity:.32; }
+    .mini-hl{
+      display:inline-block;
+      padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,207,51,.34);
+      border: 1px solid rgba(7,8,12,.12);
+      font-weight: 1000; letter-spacing:.10em; text-transform: uppercase; font-size: 12px;
+      color: var(--ink);
+    }
+
+    .h3d{
+      font-weight: 1000;
+      letter-spacing:-.02em;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,1),
+        0 2px 0 rgba(0,0,0,.08),
+        0 18px 44px rgba(12,12,18,.10);
+    }
+
+    .card{
+      border-radius: var(--r);
+      border: 1px solid var(--line);
+      background:#fff;
+      box-shadow: var(--shadow2);
+      position:relative;
+      overflow:hidden;
+    }
+    .softpad{padding: 22px;}
+
+    /* ===== Hero ===== */
+    header{position: relative; z-index: 1; padding: 26px 0 18px;}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 26px;
+      align-items:center;
+      padding: 18px 0 8px;
+    }
+    @media (max-width: 980px){ .hero{grid-template-columns:1fr;} }
+
+    .heroTitle{
+      margin: 14px 0 12px;
+      font-size: clamp(44px, 6.2vw, 78px);
+      line-height: 1.08;
+      letter-spacing: .02em;
+      color: var(--titleOrange);
+      text-shadow:
+        0 3px 0 rgba(0,0,0,.10),
+        0 18px 40px rgba(12,12,18,.18);
+    }
+    .heroTitle .l1, .heroTitle .l2{display:block}
+    .heroTitle .l1{transform: rotate(-1.5deg); transform-origin:left center;}
+    .heroTitle .l2{transform: rotate(1deg); transform-origin:left center;}
+    .heroTitle .bounce{
+      display:inline-block;
+      animation: bounce 2.6s cubic-bezier(.2,.9,.2,1) infinite;
+      will-change: transform;
+    }
+    .heroTitle .bounce2{
+      display:inline-block;
+      animation: bounce2 2.6s cubic-bezier(.2,.9,.2,1) infinite;
+      animation-delay: .08s;
+      will-change: transform;
+    }
+    @keyframes bounce{
+      0%, 60%, 100%{transform: translateY(0) rotate(0deg);}
+      12%{transform: translateY(-10px) rotate(-2deg);}
+      22%{transform: translateY(0) rotate(1deg);}
+      34%{transform: translateY(-6px) rotate(-1deg);}
+    }
+    @keyframes bounce2{
+      0%, 60%, 100%{transform: translateY(0) rotate(0deg);}
+      12%{transform: translateY(-12px) rotate(2deg);}
+      22%{transform: translateY(0) rotate(-1deg);}
+      34%{transform: translateY(-7px) rotate(1deg);}
+    }
+
+    .lead{
+      margin: 10px 0 0;
+      font-size: 16px;
+      line-height: 1.95;
+      color: var(--muted);
+      max-width: 74ch;
+    }
+    .lead p{margin:0 0 12px;}
+    .lead p:last-child{margin-bottom:0;}
+    .indentLine{display:inline-block; padding-left: 7.2em;}
+
+    .cta{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top: 16px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background:#fff;
+      font-weight: 1000;
+      box-shadow: var(--shadow2);
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      color: var(--ink);
+    }
+    .btn:hover{transform: translateY(-2px); box-shadow: var(--shadow); border-color: rgba(7,8,12,.18);}
+    .btn.primary{background: rgba(255,207,51,.28); border-color: rgba(255,138,31,.22);}
+
+    /* Right photo card */
+    .portrait{
+      position:relative;
+      border-radius: var(--r);
+      border: 1px solid var(--line);
+      background:#fff;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+    .portrait .frame{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(520px 360px at 26% 22%, rgba(255,207,51,.35), transparent 60%),
+        radial-gradient(520px 360px at 72% 26%, rgba(255,138,31,.18), transparent 60%);
+      opacity: .85;
+    }
+    .portrait .badge{
+      position:absolute; left:14px; top:14px;
+      padding:10px 12px; border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      font-size: 13px; line-height: 1.4; font-weight: 1000;
+      z-index:2; color: var(--ink);
+    }
+    .portrait .badge b{color: var(--or);}
+    .portrait .imgwrap{
+      position:relative;
+      display:grid;
+      place-items:center; /* 中央寄せ */
+      padding: 20px 18px 18px;
+      min-height: 560px;
+      z-index:1;
+    }
+    /* 枠内に自然に収める */
+    .portrait img{
+      width: 92%;
+      max-width: 560px;
+      height: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(7,8,12,.08);
+      box-shadow: var(--shadow2);
+      background:#fff;
+      object-fit: contain;
+    }
+
+    /* ===== Sections ===== */
+    section{position:relative; z-index:1; padding: 78px 0;}
+    .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:18px; margin-bottom: 18px;}
+    .section-title{margin:0; font-size: clamp(24px, 3.1vw, 36px); font-weight: 1000; letter-spacing:-.01em; color: var(--ink);}
+
+    .visionBig{
+      font-size: clamp(30px, 3.4vw, 46px);
+      line-height: 1.12;
+      margin: 0 0 12px;
+    }
+
+    /* ===== Profile ===== */
+    .profileGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items:center;
+    }
+    @media (max-width: 980px){ .profileGrid{grid-template-columns:1fr;} }
+    .profileName{margin:0 0 10px; font-weight: 1000; font-size: 26px; line-height:1.25; color: var(--ink);}
+    .profileText{margin:0; color: var(--muted); line-height: 1.95; font-size: 16px;}
+    .workPhoto{min-height: 360px; display:grid; place-items:center;}
+    .workPhoto img{
+      width: min(520px, 100%);
+      height:auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      display:block;
+      background:#fff;
+    }
+
+    /* ===== Timeline ===== */
+    .timeline{position:relative; padding-left: 22px;}
+    .timeline::before{content:""; position:absolute; left: 8px; top:0; bottom:0; width:2px; background: rgba(7,8,12,.14); border-radius: 999px;}
+    .titem{position:relative; margin: 0 0 14px; padding-left: 14px;}
+    .titem:last-child{margin-bottom:0;}
+    .titem::before{
+      content:""; position:absolute; left:-2px; top:18px;
+      width: 14px; height:14px; border-radius:999px;
+      background: var(--yl); box-shadow: 0 0 0 6px rgba(255,207,51,.22);
+      border:1px solid rgba(7,8,12,.10);
+    }
+    .tcard{
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      background:#fff;
+      box-shadow: var(--shadow2);
+      padding: 14px;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+    .tcard:hover{transform: translateY(-2px); box-shadow: var(--shadow); border-color: rgba(255,138,31,.28);}
+
+    .tgrid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media (max-width: 860px){ .tgrid{grid-template-columns:1fr;} }
+
+    .tyear{font-weight:1000; letter-spacing:.10em; font-size: 12px; color: rgba(7,8,12,.72); margin-bottom: 8px;}
+    .ttitle{margin:0 0 8px; font-weight:1000; font-size: 16px; color: var(--ink);}
+    .tlist{margin:0; padding-left: 18px; color: var(--muted); line-height:1.85; font-size: 14px;}
+    .tlist li{margin: 6px 0;}
+
+    .timg{
+      width: 100%;
+      max-width: 320px;
+      justify-self: end;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      background:#fff;
+    }
+    .timg.small{max-width: 140px;}
+    .timg img{width:100%; height:auto; display:block; object-fit: cover;}
+
+    .tlinks{margin-top: 10px; display:flex; flex-wrap:wrap; gap:10px;}
+    .linkpill{
+      display:inline-flex;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 900;
+      font-size: 13px;
+      color: var(--ink);
+      box-shadow: var(--shadow2);
+      transition: transform .16s ease;
+    }
+    .linkpill:hover{transform: translateY(-1px);}
+
+    /* ===== Contact ===== */
+    .contact{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+    .btn.fb{background: var(--fb); border-color: rgba(24,119,242,.35); color:#fff;}
+    .btn.ig{background: var(--ig); border-color: rgba(225,48,108,.35); color:#fff;}
+
+    footer{
+      position:relative; z-index:1;
+      padding: 44px 0 60px;
+      border-top: 1px solid var(--line);
+      color: rgba(7,8,12,.72);
+      background:#fff;
+    }
+    .foot{display:flex; gap:14px; justify-content:space-between; flex-wrap:wrap; align-items:center; font-weight: 1000;}
+
+    /* ===== Minimal reveal ===== */
+    .reveal{opacity:0; transform: translateY(10px); transition: opacity .42s ease, transform .42s ease;}
+    .reveal.in{opacity:1; transform: translateY(0);}
+    .d1{transition-delay:.06s}
+    .d2{transition-delay:.12s}
+    .d3{transition-delay:.18s}
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal{transition:none}
+      .pill,.btn,.tcard,.linkpill{transition:none}
+      .pill:hover,.btn:hover,.tcard:hover,.linkpill:hover{transform:none}
+      .sky{display:none}
+      .heroTitle .bounce, .heroTitle .bounce2{animation:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="bird b01"><svg width="90" height="36" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b02"><svg width="82" height="32" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b03"><svg width="96" height="38" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b04"><svg width="70" height="28" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b05"><svg width="88" height="34" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b06"><svg width="78" height="30" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b07"><svg width="92" height="36" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b08"><svg width="66" height="26" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b09"><svg width="86" height="34" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="bird b10"><svg width="74" height="30" viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26C18 10 30 10 42 26C54 10 66 10 78 26" stroke="#07080c" stroke-width="3" stroke-linecap="round"/></svg></div>
+  </div>
+
+  <div class="top">
+    <div class="wrap">
+      <div class="bar">
+        <div class="brand"><span class="dot"></span> Haruta</div>
+        <div class="links">
+          <a class="pill" href="#statement"><span class="hl">Statement</span></a>
+          <a class="pill" href="#vision"><span class="hl">Vision</span></a>
+          <a class="pill" href="#profile">Profile</a>
+          <a class="pill" href="#timeline">Timeline</a>
+          <a class="pill" href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="wrap" id="statement">
+    <div class="hero">
+      <div>
+        <div class="mini-hl reveal in">Statement</div>
+
+        <h1 class="heroTitle h3d reveal in d1">
+          <span class="l1"><span class="bounce">「やりたい」</span>を</span>
+          <span class="l2"><span class="bounce2">ひとりにしない</span></span>
+        </h1>
+
+        <div class="lead reveal in d2">
+          <p>
+            <span class="hl">「やりたい」</span>と思ったことを<br>
+            <span class="indentLine">ひとりで抱え込んでしまう学生は、少なくありません。</span>
+          </p>
+
+          <p>最初の一歩は、いつだって不完全で、ひとりでは踏み出しにくいものです。</p>
+
+          <p>
+            だから、ここはつくります。 <span class="hl">「やりたい」</span>、を言っていい場所。<br>
+            未完成のまま、集まれる場所を。
+          </p>
+
+          <p>人は、思いがつながったとき、もう一歩、前に進める。</p>
+
+          <p>やりたい、をひとりにしない。ここは、思いが連鎖する場所であり続けます。</p>
+        </div>
+
+        <div class="cta reveal in d3">
+          <a class="btn primary" href="#contact">Contact</a>
+          <a class="btn" href="#timeline">Timeline</a>
+        </div>
+      </div>
+
+      <!-- ★ここが “Haruta(now)” の枠：ここにCHEERS Pic を入れる（左の写真枠は無し） -->
+      <div class="portrait reveal in d2" aria-label="portrait">
+        <div class="frame"></div>
+        <div class="badge"><b>Haruta</b> / 小助川晴大</div>
+        <div class="imgwrap">
+          <img src="CHEERS Pic.JPG" alt="CHEERS Pic" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- VISION -->
+  <section id="vision">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title h3d"><span class="hl">Vision</span></h2>
+        </div>
+      </div>
+
+      <div class="card softpad reveal">
+        <h3 class="visionBig h3d" style="margin-top:0;">
+          <span class="hl or">思いが連鎖する社会を作る</span>
+        </h3>
+        <p style="margin:0; color:var(--muted); line-height:1.95; font-size:16px;">
+          誰かの挑戦が、次の誰かの背中を押す。<br>
+          挑戦が特別なものではなく、当たり前に存在する社会。<br>
+          年齢や立場に関係なく、「やってみたい」という思いが自然につながっていく未来を目指しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title h3d"><span class="hl">Profile</span></h2>
+        </div>
+      </div>
+
+      <div class="card softpad reveal">
+        <div class="profileGrid">
+          <div>
+            <p class="profileName"><span class="hl or">小助川 晴大</span> <span style="font-size:16px; font-weight:1000; color:var(--muted);">(Kosukegawa Haruta)</span></p>
+            <p class="profileText">
+              生年月日：2008年12月9日<br>
+              在籍：N高等学校（高校2年生）<br>
+              在住：神奈川県
+            </p>
+          </div>
+
+          <div class="workPhoto" aria-label="work photo">
+            <img src="img-work.JPG" alt="work" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title h3d"><span class="hl">Timeline</span></h2>
+        </div>
+      </div>
+
+      <div class="timeline">
+
+        <div class="titem reveal">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2008</div>
+                <div class="ttitle">神奈川県横浜市生まれ</div>
+              </div>
+              <div class="timg small">
+                <img src="img-kindergarten.JPG" alt="2008" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal d1">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2017</div>
+                <div class="ttitle">WRO 日本大会 優秀賞 / 世界大会 7位（史上最年少）</div>
+                <ul class="tlist">
+                  <li>WRO日本大会優秀賞</li>
+                  <li>地球温暖化を解決するロボットを作り英語でプレゼンし、世界大会史上最年少で世界7位</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://wonder.litalico.jp/event/report1808/" target="_blank" rel="noopener">WRO 2017</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="img-wro.JPG" alt="2017" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal d2">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2018</div>
+                <div class="ttitle">WRO 日本大会 優秀賞 / 世界大会 8位</div>
+                <ul class="tlist">
+                  <li>WRO日本大会優秀賞</li>
+                  <li>フードロスと飢餓を同時に解決するロボットを作成し、世界大会世界8位</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://www.watch.impress.co.jp/kodomo_it/news/1156150.html" target="_blank" rel="noopener">WRO 2018</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="PbR6Wayfl-sYhtOwx8f5DA.webp" alt="2018" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal d3">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2019</div>
+                <div class="ttitle">孫正義育英財団 三期生 / Startup Jr. 初代大賞 ほか</div>
+                <ul class="tlist">
+                  <li>孫正義育英財団に三期生として入る</li>
+                  <li>スタートアップjr.アワード：ソーシャルイノベーション部門 初代大賞</li>
+                  <li>WRO日本大会出場</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://valuesfusion.jp/news-release/1461/" target="_blank" rel="noopener">News</a>
+                  <a class="linkpill" href="https://www.youtube.com/watch?v=HW1aXXteqps" target="_blank" rel="noopener">YouTube</a>
+                  <a class="linkpill" href="https://mainichi.jp/articles/20190930/ddm/013/100/054000c" target="_blank" rel="noopener">Mainichi</a>
+                  <a class="linkpill" href="https://katekyo.mynavi.jp/juken/20492" target="_blank" rel="noopener">MyNavi</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="d43615-20-703202-5.jpg" alt="2019" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2020</div>
+                <div class="ttitle">登壇・出展・メディア出演</div>
+                <ul class="tlist">
+                  <li>ベンチャー起業家のピッチ『HACHIKO PITCH（渋谷QWS）』小学生初の登壇</li>
+                  <li>イベント Go SOZO（池袋）：孫正義育英財団ブース出展／財団生としてピッチ登壇</li>
+                  <li>TBS「ニュースキャスター」「Nスタ」出演（「コロナ撃退ロボット」開発が放送）</li>
+                  <li>JCI World Congress 横浜：孫正義氏登壇後、プレゼンを実施</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://shibuya-qws.com/program/hachiko-pitch" target="_blank" rel="noopener">QWS</a>
+                  <a class="linkpill" href="https://ict-enews.net/zoomin/03edtech/" target="_blank" rel="noopener">ICT</a>
+                  <a class="linkpill" href="https://vimeo.com/431006974" target="_blank" rel="noopener">Vimeo</a>
+                  <a class="linkpill" href="https://www.tbs.co.jp/Ncas/" target="_blank" rel="noopener">TBS</a>
+                  <a class="linkpill" href="https://www.yokohama-jc.or.jp/70th/book/pageindices/index75.html#page=75" target="_blank" rel="noopener">YJC</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="gs-3.jpg" alt="2020" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal d1">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2021</div>
+                <div class="ttitle">寄付活動 / シンガポール単身留学</div>
+                <ul class="tlist">
+                  <li>クラウドファンディングで34万円を集め、貧困世帯の子ども支援へ寄付</li>
+                  <li>シンガポールに小学校卒業後単身留学</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://camp-fire.jp/projects/view/341579" target="_blank" rel="noopener">CAMPFIRE</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="d9f99903-4986-4592-9ec1-0fdc7f3d2dfc.jpeg" alt="2021" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal d2">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2023</div>
+                <div class="ttitle">登壇 / ピッチ / 会社設立</div>
+                <ul class="tlist">
+                  <li>Learning Base（アクションラーニング協会主催）：中学生起業家として登壇</li>
+                  <li>SOZOW FES：テレビ朝日 SDGsチャレンジアワードへ（株）としてピッチ登壇</li>
+                  <li>ジンベエザメ（株）を設立</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://www.jial.or.jp/seminar-report/junior-high-school-entrepreneur-2/" target="_blank" rel="noopener">JIAL</a>
+                  <a class="linkpill" href="https://www.youtube.com/live/ZHi5u9mvlsc?feature=shared&t=5585" target="_blank" rel="noopener">YouTube</a>
+                  <a class="linkpill" href="https://jinbezame.jp/" target="_blank" rel="noopener">Site</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="image-13.png" alt="2023" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal d3">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2024</div>
+                <div class="ttitle">地方創生プロジェクト / 「ひきだしkids」リリース</div>
+                <ul class="tlist">
+                  <li>リクルートインターン：地方創生プロジェクト参加</li>
+                  <li>ジンベエザメ株式会社「ひきだしkids」リリース</li>
+                </ul>
+                <div class="tlinks">
+                  <a class="linkpill" href="https://jinbezame.jp/our-business" target="_blank" rel="noopener">ひきだしkids</a>
+                </div>
+              </div>
+              <div class="timg">
+                <img src="ひきだしkids写真.png" alt="2024" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="titem reveal">
+          <div class="tcard">
+            <div class="tgrid">
+              <div>
+                <div class="tyear">2025</div>
+                <div class="ttitle">活動を拡張（運営・登壇・教育）</div>
+                <ul class="tlist">
+                  <li>ICC福岡にスタッフとして参加</li>
+                  <li>ICC京都にスタッフとして参加</li>
+                  <li>リタリコ「ワンダーメイクフェス」に特別ゲストとして登壇</li>
+                  <li>Steez10代名鑑インタビュー</li>
+                  <li>マイクラ／ROBLOXを使った子供向けデジタルサービスの先生</li>
+                  <li>不登校児向けのメンターとして活動（のべ50人程）</li>
+                  <li>学生団体フロンティア：財政教育のPJマネジャー</li>
+                  <li>CHEERS株式会社：新規事業部</li>
+                  <li>とうきょうこどもクリエイティブラボ（くりらぼ）：現場責任者</li>
+                  <li>リクルートインターン：地方創生プロジェクト in 宮古島 参加</li>
+                  <li>N高等学校BLP 正規生</li>
+                  <li>麗澤大学 高校生プレゼンテーションコンテスト 本線出場</li>
+                </ul>
+              </div>
+              <div class="timg">
+                <img src="リタリコワンダー写真.png" alt="2025" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title h3d"><span class="hl">Contact</span></h2>
+        </div>
+      </div>
+
+      <div class="card softpad reveal">
+        <div class="contact">
+          <a class="btn primary" href="mailto:hkosuke1209@gmail.com">hkosuke1209@gmail.com</a>
+          <a class="btn fb" href="https://www.facebook.com/haruta.kosukegawa" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn ig" href="https://www.instagram.com/smallhelpriver/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>© <span id="y"></span> Haruta Kosukegawa</div>
+        <div></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    const io = new IntersectionObserver((entries)=>{
+      for(const e of entries){
+        if(e.isIntersecting) e.target.classList.add("in");
+      }
+    }, {threshold: 0.14});
+    document.querySelectorAll(".reveal:not(.in)").forEach(el=> io.observe(el));
+
+    const card = document.querySelector(".portrait");
+    if(card && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+      card.addEventListener("mousemove", (ev)=>{
+        const r = card.getBoundingClientRect();
+        const x = (ev.clientX - r.left) / r.width - 0.5;
+        const y = (ev.clientY - r.top) / r.height - 0.5;
+        const rx = (-y * 5).toFixed(2);
+        const ry = ( x * 5).toFixed(2);
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      }, {passive:true});
+      card.addEventListener("mouseleave", ()=>{ card.style.transform = "none"; }, {passive:true});
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
